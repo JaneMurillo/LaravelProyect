@@ -18,6 +18,6 @@ class Materia extends Model
 
     public function alumnos()
     {
-        return $this->belongsToMany(Alumno::class);
+        return $this->belongsToMany(Alumno::class)->withPivot('calificacion');
     }
 }

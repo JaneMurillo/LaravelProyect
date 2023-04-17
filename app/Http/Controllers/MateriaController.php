@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Materia;
+
 use Illuminate\Http\Request;
 
 class MateriaController extends Controller
@@ -14,7 +15,7 @@ class MateriaController extends Controller
      */
     public function index()
     {
-        $materias = Materias::all();
+        $materias = Materias->all();
         return view('materias.index', compact('materias'));
     }
 
@@ -61,7 +62,10 @@ class MateriaController extends Controller
      */
     public function show(Materia $materia)
     {
-        //
+        $alumnos = Alumno->all();
+        //dd($materia);
+        return view('materias.showMateria', compact('materia','alumnos'));
+
     }
 
     /**
@@ -97,4 +101,16 @@ class MateriaController extends Controller
     {
         //
     }
+
+    public function administrarAlumnos(Request $request, Materia $materia)
+    {
+        // dd($request->all());
+        // $materia = Materia::find($request->materia_id);
+        // $materia->alumnos()->attach($request->alumno_id); // insert en la tabla pivote
+        $materia->alumnos()->sync($request->alumno_id); // Administra las actualizaciones de la relaciones
+
+        return redirect()->route('materia.show', $materia);
+    }
+
+    
 }

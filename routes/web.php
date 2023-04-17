@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DepartamentoController;
+use App\Http\Controllers\MateriaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,5 +19,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('materia', MateriaController::class);
+Route::post('materia/admin-alumno/{materia}', [MateriaController::class, 'administrarAlumnos'])
+    ->name('materia.admin-alumnos');
+Route::resource('materia', MateriaController::class)->parameters(['materia' => 'materia']);
 Route::resource('departamento', DepartamentoControllerr::class);
